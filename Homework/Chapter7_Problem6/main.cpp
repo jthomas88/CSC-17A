@@ -23,7 +23,7 @@ const int MON=3; //Number of months being recorded
 void fillAry(char[][MON],int); //Fill array with random char values
 void prntAry(char[][MON],int); //Output array
 
-void wthrTly(char[][MON],int); //Tallys weather patterns
+void wthrTly(char[][MON],string[],int); //Tallys weather patterns
 
 //Execution begins here
 int main(int argc, char** argv) 
@@ -32,10 +32,12 @@ int main(int argc, char** argv)
     srand(time(0));
     
     //Declare constants
-    const int DAY=30; //Number of days per month being measured
+    const int DAY=31; //Number of days per month being measured
     
     //Declare arrays
-    char weather[DAY][MON];
+    char   weather[DAY][MON];
+    string months[MON]={"June","July","August"};
+    
     
     
     //Declare file objects and open
@@ -49,7 +51,7 @@ int main(int argc, char** argv)
     prntAry(weather,DAY);
     
     //Calculate and output results
-    wthrTly(weather,DAY);
+    wthrTly(weather,months,DAY);
     
     //Close file
     //write.close();
@@ -58,9 +60,10 @@ int main(int argc, char** argv)
     return 0;
 }
 
+
 void fillAry(char a[][MON],int n){
     for(int i=0;i<MON;i++){
-        for(int j=0;j<n;j++){
+        for(int j=0;j<n-1;j++){
             do{
                 char wthr=rand()%26+65;
                 a[i][j]=wthr;
@@ -72,29 +75,43 @@ void fillAry(char a[][MON],int n){
 void prntAry(char a[][MON],int n){
     for(int i=0;i<MON;i++){
         
-        for(int j=0;j<n;j++){
+        for(int j=0;j<n-1;j++){
             cout<<a[i][j]<<' ';
             if(j==29)cout<<endl;
         }
     }
 }
 
-void wthrTly(char a[][MON],int n){
-    int rain,clou,sunn=0; //Rain, Cloudy and Sunny counters
+void wthrTly(char a[][MON],string m[],int n){
+    int rain,clou,sunn; //Rain, Cloudy and Sunny counters
+    int raintot,cloutot,sunntot=0;
     for(int i=0;i<MON;i++){
-        for(int j=0;j<n;j++){ 
+        rain=0;clou=0;sunn=0;
+        for(int j=0;j<n-1;j++){ 
+            
             switch(a[i][j]){
-                case 'R': rain++;break;
-                case 'S': sunn++;break;
-                case 'C': clou++;break;
-            }            
+                case 'R': rain++;raintot++;break;
+                case 'S': sunn++;cloutot++;break;
+                case 'C': clou++;sunntot++;break;
+            }
+            if(n==29)a[i][j+1]=rain;            
         }
+        cout<<m[i]<<endl;
         cout<<"Sunny Days : "<<sunn<<endl;
         cout<<"Cloudy Days: "<<clou<<endl;
         cout<<"Rainy Days : "<<rain<<endl;
         cout<<endl;
-        sunn=0;rain=0;clou=0;
     }
+    cout<<"Total"<<endl;
+    cout<<"Sunny Days : "<<sunntot<<endl;
+    cout<<"Cloudy Days: "<<cloutot<<endl;
+    cout<<"Rainy Days : "<<raintot<<endl;
+    cout<<endl;
+
+    cout<<"Rainiest month: ";
+    for(int i=0;i<MON;i++){
+        
+    }    
 }
 
 void mstRain(){
