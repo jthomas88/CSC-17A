@@ -1,7 +1,7 @@
 /* 
  * File:   main.cpp
  * Author: Jeffrey Thomas
- * Created on Month Day, Year, Time AM/PM
+ * Created on March 06, 2017, 10:30 PM
  * Purpose: 
  */
 
