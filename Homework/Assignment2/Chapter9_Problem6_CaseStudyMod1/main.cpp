@@ -7,6 +7,8 @@
 
 //System Libraries
 #include <iostream>  //Input/Output objects
+#include <cstdlib>
+#include <ctime>
 
 using namespace std; //Namespace used in system library
 
@@ -15,33 +17,36 @@ using namespace std; //Namespace used in system library
 //Global constants
 
 //Function prototypes
-void arrSelectSort(int*[],int);
-void showArray(const int[],int);
+void arrSelectSort(int*,int);
+void showArray(int*,int);
 void showArrPtr(int*[],int);
 
 //Execution begins here
-int main(){ 
-const int NUM_DONATIONS=15;   // Number of donations 
-// An array containing the donation amounts. 
-int donations[NUM_DONATIONS]={5,100,5,25,10,5,25,5,5,100,10,15,10,5,10}; 
-// An array of pointers to int. 
-int *arrPtr[NUM_DONATIONS]={ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; 
+int main(){
+    //Initialize random seed
+    srand(time(0));
+    
+    //Declare Size
+    int size=20;    
+    
+    //An array of pointers to int. 
+    int *arrPtr=new int[size];
 
-// Each element of arrPtr is a pointer to int. Make each 
-// element point to an element in the donations array. 
-for(int count=0;count<NUM_DONATIONS;count++) 
-    arrPtr[count]=&donations[count]; 
-    // Sort the elements of the array of pointers. 
-    arrSelectSort(arrPtr,NUM_DONATIONS); 
-    // Display the donations using the array of pointers. This 
-    // will display them in sorted order. 
-    cout<<"The donations, sorted in ascending order are: \n"; 
-    showArrPtr(arrPtr,NUM_DONATIONS); 
-    // Display the donations in their original order. 
-    cout<<"The donations, in their original order are: \n"; 
-    showArray(donations,NUM_DONATIONS); 
-    return 0; 
-    }
+    // Each element of arrPtr is a pointer to int. Make each 
+    // element point to an element in the donations array. 
+    for(int i=0;i<size;i++) 
+        arrPtr[i]=rand()%100; 
+        // Sort the elements of the array of pointers. 
+        arrSelectSort(arrPtr,size); 
+        // Display the donations using the array of pointers. This 
+        // will display them in sorted order. 
+        cout<<"The donations, sorted in ascending order are: \n"; 
+        //showArrPtr(arrPtr,size); 
+        // Display the donations in their original order. 
+        cout<<"The donations, in their original order are: \n"; 
+        showArray(arrPtr,size); 
+        return 0; 
+}
  
 //**************************************************************** 
 // Definition of function arrSelectSort. * 
@@ -85,8 +90,11 @@ void showArray(const int arr[],int size){
 // by arr. size is the number of elements. * 
 //*************************************************************** 
  
-void showArrPtr(int *arr[],int size){ 
+/*
+ 
+void showArrPtr(int *arr,int size){ 
     for(int count=0;count<size;count++) 
         cout<<*(arr[count])<<" "; 
         cout<<endl; 
 }    
+ * */
