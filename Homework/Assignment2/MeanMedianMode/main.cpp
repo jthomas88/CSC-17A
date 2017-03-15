@@ -22,12 +22,16 @@ int  *genAry(int);
 void prntAry(int,int *);
 int  mean(int,int *);
 int  median(int,int *);
+void mode(int n, int *a);
 
 //Execution begins here
 int main(int argc, char** argv) 
 {
+    //Initialize random seed
+    srand(time(0));
+    
     //Declare Variable
-    int size=9;
+    int size=99;
     
     //Initialize Array
     int *array=genAry(size);
@@ -43,10 +47,10 @@ int main(int argc, char** argv)
     
     //Find Median
     cout<<"Median of array: "<<median(size,array);
-    cout<<cout;
+    cout<<endl;
     
     //Find Mode
-    
+    mode(size,array);
     
     //Delete Memory
     delete []array;
@@ -105,6 +109,20 @@ int median(int n,int *a){
     }
 }
 
-int *mode(){
+void mode(int n, int *a){
+    int unique=0;
+    int counter=0;
+    bool isSort;
+    sortAry(n,a);
+    //do{
+        for(int i=0;i<n-1;i++){
+        if(a[i]!=a[i+1]){
+            unique=a[i];counter=0;cout<<"Unique number: "<<unique<<endl;
+        }
+        if(a[i]==a[i+1]){
+            counter++;cout<<"Counter: "<<counter<<endl;
+        }
+    }
+    //}while(isSort);
     
 }

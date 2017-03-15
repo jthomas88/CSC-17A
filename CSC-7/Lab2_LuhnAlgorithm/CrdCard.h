@@ -8,18 +8,28 @@
  * File:   CrdCard.h
  * Author: Jeff
  *
- * Created on March 12, 2017, 5:58 PM
+ * Created on March 14, 2017, 9:09 PM
  */
 
 #ifndef CRDCARD_H
 #define CRDCARD_H
 
 struct CrdCard{
-        string ccCom;    //Credit card company
-        int stDig;    //Starting digits
-        char ccNum[]; //Credit card number
-    };
+    int  length;
+    char startDg;
+    
+};
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CRDCARD_H */
 
