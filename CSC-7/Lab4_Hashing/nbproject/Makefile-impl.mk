@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Lab3_LuhnAlgorithm
+PROJECTNAME=Lab4_Hashing
 
 # Active Configuration
 DEFAULTCONF=Debug
