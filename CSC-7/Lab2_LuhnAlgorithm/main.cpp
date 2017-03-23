@@ -56,9 +56,9 @@ int main(int argc, char** argv)
     
     //Define Arrays
     char visaCrd[visa.length];
-    char mscdCrd[visa.length];
-    char discCrd[visa.length];
-    char amexCrd[visa.length];
+    char mscdCrd[mscd.length];
+    char discCrd[disc.length];
+    char amexCrd[amex.length];
     
     //Select card type to test
     cout<<"Select a card type:"<<endl<<endl;
