@@ -17,7 +17,10 @@ using namespace std; //Namespace used in system library
 #include "Weather.h"
 
 //Global constants             
-const int MONTHS=12; //Number of months in a year             
+const int MONTHS=12; //Number of months in a year    
+
+enum year {JAN,FEB,MAR,APR,MAY,JUN, 
+           JUL,AUG,SEP,OCT,NOV,DEC};
 
 //Function prototypes
 void fillAry(Weather[]);    
@@ -33,11 +36,12 @@ int main(int argc, char** argv)
     //Initialize random seed
     srand(time(0));
     
-    //Declare array for 
+    //Declare array for weather data
     Weather data[MONTHS]; 
+    
     //Array for months of the year
-    string year[MONTHS]={"JAN","FEB","MAR","APR","MAY","JUN", 
-                         "JUL","AUG","SEP","OCT","NOV","DEC"};
+    string year[]={"JAN","FEB","MAR","APR","MAY","JUN",
+                 "JUL","AUG","SEP","OCT","NOV","DEC"};
 
     //Fill array with weather data
     fillAry(data);
@@ -53,7 +57,7 @@ int main(int argc, char** argv)
 }
 
 void fillAry(Weather data[]){
-    for(int i=0;i<MONTHS;i++){
+    for(int i=JAN;i<=DEC;i++){
         data[i].rain=(rand()%1000)/100.0f; //Random value between 0.00"-9.99"
         data[i].higT=rand()%40+60;  //Random temperature between 60F - 99F
         data[i].lowT=rand()%100-40; //Random temperature between -40F - 59F
@@ -66,7 +70,7 @@ void getData(Weather data[],string m[]){
     Weather totals;  
     
     //Get totals
-    for(int i=0;i<MONTHS;i++){
+    for(int i=JAN;i<=DEC;i++){
         totals.rain+=data[i].rain; //Add together rain data from all months
         totals.avgT+=data[i].avgT; //Add together averages from all months
     }
@@ -90,7 +94,7 @@ void getData(Weather data[],string m[]){
 }
 
 void prntAry(Weather data[],string m[]){
-    for(int i=0;i<MONTHS;i++){
+    for(int i=JAN;i<=DEC;i++){
         cout<<m[i]<<endl;
         cout<<"Total Monthly Rainfall: "
                 <<fixed<<setprecision(2)<<data[i].rain<<"in."<<endl;
@@ -109,7 +113,7 @@ void findHig(Weather data[],string m[]){
     string curMon;           //Corresponding month to the annual high
     
     //Find annual high
-    for(int i=0;i<MONTHS;i++){
+    for(int i=JAN;i<=DEC;i++){
         if(data[i].higT>high){
             high=data[i].higT;
             curMon=m[i];
@@ -125,7 +129,7 @@ void findLow(Weather data[],string m[]){
     string curMon;          //Corresponding month to annual low
     
     //Find annual low
-    for(int i=0;i<MONTHS;i++){
+    for(int i=JAN;i<=DEC;i++){
         if(data[i].lowT<low){
             low=data[i].lowT;
             curMon=m[i];
