@@ -19,7 +19,7 @@ using namespace std; //Namespace used in system library
 //Global constants
 
 //Function prototypes
-void fillAry(Budg);
+void fillAry(Budg&);
 void prntAry(Budg);
 void chkBudg(Budg,Budg);
 
@@ -32,6 +32,18 @@ int main(int argc, char** argv)
     //Declare variables
     Budg ideal;    
     Budg real;
+    
+    //Define ideal budget
+    ideal.hous=500.00f;ideal.totl+=ideal.hous;
+    ideal.util=150.00f;ideal.totl+=ideal.util;
+    ideal.hexp= 65.00f;ideal.totl+=ideal.hexp;
+    ideal.trns= 50.00f;ideal.totl+=ideal.trns;
+    ideal.food=250.00f;ideal.totl+=ideal.food;
+    ideal.meds= 30.00f;ideal.totl+=ideal.meds;
+    ideal.insr=100.00f;ideal.totl+=ideal.insr;
+    ideal.entr=150.00f;ideal.totl+=ideal.entr;
+    ideal.clot= 75.00f;ideal.totl+=ideal.clot;
+    ideal.misc= 50.00f;ideal.totl+=ideal.misc;
     
     //Generate monthly spending report
     fillAry(real);
@@ -48,23 +60,21 @@ int main(int argc, char** argv)
     //Check budget surpluses/deficits;
     chkBudg(ideal,real);
     
-    //Process Values
-    
     //Exit program
     return 0;
 }
 
-void fillAry(Budg b){
-    b.hous=rand()%500;b.totl+=b.hous;
-    b.util=rand()%500;b.totl+=b.util;
-    b.hexp=rand()%60000/1000;b.totl+=b.hexp;
-    b.trns=rand()%60000/1000;b.totl+=b.trns;
-    b.food=rand()%60000/1000;b.totl+=b.food;
-    b.meds=rand()%60000/1000;b.totl+=b.meds;
-    b.insr=rand()%60000/1000;b.totl+=b.insr;
-    b.entr=rand()%60000/1000;b.totl+=b.entr;
-    b.clot=rand()%60000/1000;b.totl+=b.clot;
-    b.misc=rand()%60000/1000;b.totl+=b.misc;
+void fillAry(Budg &b){
+    b.hous=rand()%5000*0.1;b.totl+=b.totl;
+    b.util=rand()%5000*0.1;b.totl+=b.util;
+    b.hexp=rand()%5000*0.1;b.totl+=b.hexp;
+    b.trns=rand()%5000*0.1;b.totl+=b.trns;
+    b.food=rand()%5000*0.1;b.totl+=b.food;
+    b.meds=rand()%5000*0.1;b.totl+=b.meds;
+    b.insr=rand()%5000*0.1;b.totl+=b.insr;
+    b.entr=rand()%5000*0.1;b.totl+=b.entr;
+    b.clot=rand()%5000*0.1;b.totl+=b.clot;
+    b.misc=rand()%5000*0.1;b.totl+=b.misc;
 }
 void prntAry(Budg b){
     cout<<"Housing       : $"<<fixed<<setprecision(2)<<b.hous<<endl;
@@ -80,25 +90,15 @@ void prntAry(Budg b){
     cout<<"Total Monthly : $"<<fixed<<setprecision(2)<<b.totl<<endl;
 }
 void chkBudg(Budg a,Budg b){
-    cout<<"Housing       : $"<<(a.hous>b.hous)?a.hous-b.hous:b.hous-a.hous;
-    cout<<endl;
-    cout<<"Utilities     : $"<<(a.util>b.util)?a.util-b.util:b.util-a.util;
-    cout<<endl;
-    cout<<"Home Expenses : $"<<(a.hexp>b.hexp)?a.hexp-b.hexp:b.hexp-a.hexp;
-    cout<<endl;
-    cout<<"Transportation: $"<<(a.trns>b.trns)?a.trns-b.trns:b.trns-a.trns;
-    cout<<endl;
-    cout<<"Food          : $"<<(a.food>b.food)?a.food-b.food:b.food-a.food;
-    cout<<endl;
-    cout<<"Medical       : $"<<(a.meds>b.meds)?a.meds-b.meds:b.meds-a.meds;
-    cout<<endl;
-    cout<<"Insurance     : $"<<(a.insr>b.insr)?a.insr-b.insr:b.insr-a.insr;
-    cout<<endl;
-    cout<<"Entertainment : $"<<(a.entr>b.entr)?a.entr-b.entr:b.entr-a.entr;
-    cout<<endl;
-    cout<<"Clothing      : $"<<(a.clot>b.clot)?a.clot-b.clot:b.clot-a.clot;
-    cout<<endl;
-    cout<<"Miscellaneous : $"<<(a.misc>b.misc)?a.misc-b.misc:b.misc-a.misc;
-    cout<<endl;
-    cout<<"Total Monthly : $"<<(a.totl>b.totl)?a.totl-b.totl:b.totl-a.totl;
+    cout<<"Housing       : $"<<a.hous-b.hous;cout<<endl;
+    cout<<"Utilities     : $"<<a.util-b.util;cout<<endl;
+    cout<<"Home Expenses : $"<<a.hexp-b.hexp;cout<<endl;
+    cout<<"Transportation: $"<<a.trns-b.trns;cout<<endl;
+    cout<<"Food          : $"<<a.food-b.food;cout<<endl;
+    cout<<"Medical       : $"<<a.meds-b.meds;cout<<endl;
+    cout<<"Insurance     : $"<<a.insr-b.insr;cout<<endl;
+    cout<<"Entertainment : $"<<a.entr-b.entr;cout<<endl;
+    cout<<"Clothing      : $"<<a.clot-b.clot;cout<<endl;
+    cout<<"Miscellaneous : $"<<a.misc-b.misc;cout<<endl;
+    cout<<"Total Monthly : $"<<a.totl-b.totl;
 }

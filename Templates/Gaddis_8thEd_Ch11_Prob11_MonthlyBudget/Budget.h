@@ -24,8 +24,8 @@ struct Budg{
           insr, //Insurance
           entr, //Entertainment
           clot, //Clothing
-          misc, //Miscellaneous
-          totl; //Total monthly spending
+          misc; //Miscellaneous
+    float totl=0.00f; //Total monthly spending
 };
 
 #endif /* BUDGET_H */
