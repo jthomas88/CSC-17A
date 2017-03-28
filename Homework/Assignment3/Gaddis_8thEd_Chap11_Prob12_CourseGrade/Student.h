@@ -18,6 +18,7 @@ struct Student{
     std::string name;
     int         stuID;
     int         *tests;
+    int         tstSize;
     float       avg;
     char        grade;
 };
