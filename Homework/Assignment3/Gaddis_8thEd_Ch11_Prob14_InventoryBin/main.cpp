@@ -102,26 +102,33 @@ void initBin(Bin inv[]){
 
 //Add Parts Function
 void addPart(Bin inv[]){
-    int cho;
-    int add=0;
-    bool isAdd=0;
+    int cho;      //User inputted choice
+    int add=0;    //Number of parts to be added
+    bool isAdd=0; //Flag to confirm parts have been added
+    
+    //Prompt user
     cout<<"Select a bin to add parts to."<<endl<<endl;
     for(int i=VALV;i<=RODD;i++){
         cout<<i+1<<". "<<inv[i].name<<endl;
     }
+    //Input choice
     cin>>cho;
     do{
+        //Prompt user
         cout<<"How many parts are you adding?"<<endl;
+        //Input choice
         cin>>add;    
+        //Deny part add if total exceeds 30 parts
         if(inv[cho-1].stok+add>30){
             cout<<"Maximum capacity is 30 parts. Please add a smaller amount."<<endl;
         }
+        //Add parts if parts fit
         else{
             inv[cho-1].stok+=add;
             cout<<"Added "<<add<<" parts to "<<inv[cho-1].name;
             isAdd=1;
         }  
-    }while(!isAdd);     
+    }while(!isAdd); //Continue looping until parts have been added    
     cout<<endl<<endl;
 }
 
@@ -154,7 +161,6 @@ void remPart(Bin inv[]){
 void dispBin(Bin inv[]){
     for(int i=VALV;i<=RODD;i++){
         cout<<left<<setw(20)<<inv[i].name<<": "<<inv[i].stok;
-        //if(i%3==2)
         cout<<endl;
     }
     cout<<endl<<endl;

@@ -17,8 +17,10 @@
 struct MovData{
     string title; //Movie title
     string drctr; //Director
-    int    year;  //Year Released
-    short  runtm; //Runtime in mins
+    int    year;  //Year released
+    short  runtm; //Runtime in minutes
+    short  bdgt;  //Movie Budget (in millions)
+    short  grss;  //Gross Earnings (in millions)
 };
 
 #ifdef __cplusplus

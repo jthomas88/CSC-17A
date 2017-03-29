@@ -14,7 +14,7 @@
 using namespace std; //Namespace used in system library
 
 //User libraries
-#include "Weather.h"
+#include "Weather.h" //Weather data struct
 
 //Global constants             
 const int MONTHS=12; //Number of months in a year             

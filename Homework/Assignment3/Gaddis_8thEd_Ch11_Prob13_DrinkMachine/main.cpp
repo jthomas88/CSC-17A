@@ -6,29 +6,32 @@
  */
 
 //System Libraries
-#include <iostream>
-#include <iomanip>
+#include <iostream> //Object I/O
+#include <iomanip>  //I/O format
 
-#include "Drinks.h"  //Input/Output objects
+  //Input/Output objects
 
 using namespace std; //Namespace used in system library
 
 //User libraries
+#include "Drinks.h"
 
 //Global constants
-enum drinks {COLA,RB,LEMLIM,GRAPE,CREAM};
+enum drinks {COLA,RB,LEMLIM,GRAPE,CREAM}; //Drink type enumerator
 
 //Function prototypes
-int prompt(Drink[],int&);
+int  prompt(Drink[],int&);
 void initMch(Drink[]);
 void drnkSim(Drink[]);
+
+void paymnt(Drink[],int);
 
 //Execution begins here
 int main(int argc, char** argv) 
 {
     //Declaration of variables
-    const int size=5;
-    Drink machine[size];
+    const int size=5;    //Number of drinks
+    Drink machine[size]; //Dink machine object
     
     //Initialize drinks
     initMch(machine);
@@ -41,6 +44,7 @@ int main(int argc, char** argv)
 }
 
 void initMch(Drink machine[]){
+    //Declare name, cost, and initial quantity for all drinks
     machine[COLA].name="Cola";
     machine[COLA].cost=0.75f;
     machine[COLA].stok=20;
@@ -62,12 +66,37 @@ void initMch(Drink machine[]){
     machine[CREAM].stok=20;
 }
 
+void paymnt(Drink machine[],int cho){
+    float entrd,money=0.0f; //Initialize money entered and total money to 0
+    do{
+        //Prompt user for input
+        cout<<"Enter your money now"<<endl;
+        //Input money
+        cin>>money;
+        //Add money to total if it does not exceed maximum bill taken
+        if(money<=1.0f)entrd+=money;
+        //Prompt user for more money if total has not been reached
+        if(entrd<machine[cho-1].cost){
+            cout<<"Insufficient funds. Please enter "
+                <<machine[cho-1].cost-entrd<<" more cents."<<endl;
+        }
+        //Prompt user to enter smaller amount if amount exceeds maximum
+        if(money>1.0f){
+            cout<<"Sorry! Maximum bill accepted is $1"<<endl;
+        }
+    }while(entrd<machine[cho-1].cost||money>1.0f);
+    //Decrement 1 from quantity
+    machine[cho-1].stok--;
+    cout<<"*bzzt* *clunk* Enjoy your drink!"<<endl;
+    //Output change owed
+    cout<<"Your change is "<<entrd-machine[cho-1].cost<<" cents";
+    cout<<endl<<endl;
+}
+
 void drnkSim(Drink machine[]){
-    int   cho;
+    int   cho; //User inputted choice
     float money,entrd=0.00f;
     do{
-        //Reinitialize back to zero
-        money,entrd=0.00f;
         //Prompt user for drink choice
         prompt(machine,cho);
         //Money Menu
@@ -75,105 +104,31 @@ void drnkSim(Drink machine[]){
             case 0:
                 break;
             case 1:
-                do{
-                    cout<<"Enter your money now"<<endl;
-                    cin>>money;
-                    if(money<=1.0f)entrd+=money;
-                    if(entrd<machine[COLA].cost){
-                        cout<<"Insufficient funds. Please enter "
-                            <<machine[COLA].cost-entrd<<" more cents."<<endl;
-                    }
-                    if(money>1.0f){
-                        cout<<"Sorry! Maximum bill accepted is $1"<<endl;
-                    }
-                }while(entrd<machine[COLA].cost||money>1.0f);
-                machine[COLA].stok--;
-                cout<<"*bzzt* *clunk* Enjoy your drink!"<<endl;
-                cout<<"Your change is "<<entrd-machine[COLA].cost<<" cents";
-                cout<<endl<<endl;
+                paymnt(machine,cho);
                 break;
             case 2:
-                do{
-                    cout<<"Enter your money now"<<endl;
-                    cin>>money;
-                    if(money<=1.0f)entrd+=money;
-                    if(entrd<machine[RB].cost){
-                        cout<<"Insufficient funds. Please enter "
-                            <<machine[RB].cost-entrd<<" more cents."<<endl;
-                    }
-                    if(money>1.0f){
-                        cout<<"Sorry! Maximum bill accepted is $1"<<endl;
-                    }
-                }while(entrd<machine[RB].cost||money>1.0f);
-                machine[RB].stok--;
-                cout<<"*bzzt* *clunk* Enjoy your drink!"<<endl;
-                cout<<"Your change is "<<entrd-machine[RB].cost<<" cents";
-                cout<<endl<<endl;
+                paymnt(machine,cho);
                 break;
             case 3:
-                do{
-                    cout<<"Enter your money now"<<endl;
-                    cin>>money;
-                    if(money<=1.0f)entrd+=money;
-                    if(entrd<machine[LEMLIM].cost){
-                        cout<<"Insufficient funds. Please enter "
-                            <<machine[LEMLIM].cost-entrd<<" more cents."<<endl;
-                    }
-                    if(money>1.0f){
-                        cout<<"Sorry! Maximum bill accepted is $1"<<endl;
-                    }
-                }while(entrd<machine[LEMLIM].cost||money>1.0f);
-                machine[LEMLIM].stok--;
-                cout<<"*bzzt* *clunk* Enjoy your drink!"<<endl;
-                cout<<"Your change is "<<entrd-machine[LEMLIM].cost<<" cents";
-                cout<<endl<<endl;
+                paymnt(machine,cho);
                 break;
             case 4:
-                do{
-                    cout<<"Enter your money now"<<endl;
-                    cin>>money;
-                    if(money<=1.0f)entrd+=money;
-                    if(entrd<machine[GRAPE].cost){
-                        cout<<"Insufficient funds. Please enter "
-                            <<machine[GRAPE].cost-entrd<<" more cents."<<endl;
-                    }
-                    if(money>1.0f){
-                        cout<<"Sorry! Maximum bill accepted is $1"<<endl;
-                    }
-                }while(entrd<machine[GRAPE].cost||money>1.0f);
-                machine[GRAPE].stok--;
-                cout<<"*bzzt* *clunk* Enjoy your drink!"<<endl;
-                cout<<"Your change is "<<entrd-machine[GRAPE].cost<<" cents";
-                cout<<endl<<endl;
+                paymnt(machine,cho);
                 break;
             case 5:
-                do{
-                    cout<<"Enter your money now"<<endl;
-                    cin>>money;
-                    if(money<=1.0f)entrd+=money;
-                    if(entrd<machine[CREAM].cost){
-                        cout<<"Insufficient funds. Please enter "
-                            <<machine[CREAM].cost-entrd<<" more cents."<<endl;
-                    }
-                    if(money>1.0f){
-                        cout<<"Sorry! Maximum bill accepted is $1"<<endl;
-                    }
-                }while(entrd<machine[CREAM].cost||money>1.0f);
-                machine[CREAM].stok--;
-                cout<<"*bzzt* *clunk* Enjoy your drink!"<<endl;
-                cout<<"Your change is "<<entrd-machine[CREAM].cost<<" cents";
-                cout<<endl<<endl;
+                paymnt(machine,cho);;
                 break;
             default:
                 cout<<"Invalid choice! Please select from the provided options.";
                 cout<<endl<<endl;
                 break;
         }
+        //Reinitialize back to zero
+        money,entrd=0.00f;
     }while(cho!=0);
 }
 
 int prompt(Drink machine[],int &cho){
-
     //Prompt user for choice
     cout<<"Select your drink"<<endl;
     cout<<"1. "<<setw(11)<<left<<machine[COLA].name

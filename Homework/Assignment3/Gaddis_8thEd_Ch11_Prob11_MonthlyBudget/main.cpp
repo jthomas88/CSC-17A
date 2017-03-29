@@ -14,7 +14,7 @@
 using namespace std; //Namespace used in system library
 
 //User libraries
-#include "Budget.h"
+#include "Budget.h"  //Budget struct
 
 //Global constants
 
@@ -65,6 +65,7 @@ int main(int argc, char** argv)
 }
 
 void fillAry(Budg &b){
+    //Fill each array with random amounts 0.0-500.0
     b.hous=rand()%5000*0.1;b.totl+=b.totl;
     b.util=rand()%5000*0.1;b.totl+=b.util;
     b.hexp=rand()%5000*0.1;b.totl+=b.hexp;
