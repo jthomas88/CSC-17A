@@ -8,6 +8,7 @@
 //System Libraries
 #include <iostream>  //Input/Output objects
 #include <cstring>   //Character Array Functionality
+#include <cstdlib>   //ato1 function
 
 using namespace std; //Namespace used in system library
 
@@ -16,7 +17,7 @@ using namespace std; //Namespace used in system library
 //Global constants
 
 //Function prototypes
-void reverse(char *,int);
+int sumDig(char *,int);
 
 //Execution begins here
 int main(int argc, char** argv) 
@@ -27,11 +28,11 @@ int main(int argc, char** argv)
     input=new char[MAXSIZE+1];
     
     //Receive value for string
-    cout<<"Enter a string up to 10 characters in length: "<<endl;
+    cout<<"Enter a string up to 25 characters in length: "<<endl;
     cin.getline(input,MAXSIZE);
     
-    //Reverse string
-    reverse(input,MAXSIZE);
+    //Count words
+    cout<<"Total: "<<sumDig(input,MAXSIZE);
     
     //Delete memory
     delete[]input;
@@ -41,8 +42,14 @@ int main(int argc, char** argv)
 }
 
 //Reverse String Function
-void reverse(char *input,int n){
-    for(int i=n-1;i>=0;i--){
-        cout<<input[i];
+int sumDig(char *input,int n){
+    int total=0;
+    int num;
+    
+    
+    
+    for(int i=0;i<n-1;i++){
+        
     }
+    return total;
 }
