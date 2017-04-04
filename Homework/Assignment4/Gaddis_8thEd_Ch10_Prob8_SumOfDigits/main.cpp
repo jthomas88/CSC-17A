@@ -9,6 +9,7 @@
 #include <iostream>  //Input/Output objects
 #include <cstring>   //Character Array Functionality
 #include <cstdlib>   //ato1 function
+#include <cmath>
 
 using namespace std; //Namespace used in system library
 
@@ -18,6 +19,7 @@ using namespace std; //Namespace used in system library
 
 //Function prototypes
 int sumDig(char *,int);
+int power(int,int);
 
 //Execution begins here
 int main(int argc, char** argv) 
@@ -45,11 +47,27 @@ int main(int argc, char** argv)
 int sumDig(char *input,int n){
     int total=0;
     int num;
+    int size=0;
     
+    for(int i=0;i<n;i++){
+        if(input[i]!='\0')size++;
+    }
     
+    num=atoi(input);
     
-    for(int i=0;i<n-1;i++){
-        
+    for(int i=0;i<size;i++){
+        total+=num%(10);
+        cout<<total<<endl;
+        num/=10;
+        cout<<num<<endl;
     }
     return total;
+}
+
+int power(int base,int exp){
+    int power=base;
+    for(int i=0;i<exp;i++){
+        power*=base;
+    }
+    return power;
 }
