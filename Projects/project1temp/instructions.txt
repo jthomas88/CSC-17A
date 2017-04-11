@@ -1,0 +1,41 @@
+Lemming Domination is a war game in which you control 
+an army of lemmings and aim to dominate the world.
+
+The objective is to simply build up your army as much as possible 
+in order to defeat the endless armies you will be faced with.
+
+The game ends when your army is annihilated.
+
+Help:
+
+Conquest - This is the main mode of the game. You will be faced 
+with an endless number of enemies and the objective is to simply 
+survive as long as you can without being conquered yourself. 
+Careful management of resources and a bit of luck will be the keys 
+to victory.
+
+Marketplace - This is the place in the game where you buy items
+that will aid you in your conquest. You can purchase items with the
+gold you pilfer from enemy armies. You may purchase weapons, armor,or 
+even more lemming soldiers with your gold.
+
+On your HUD, there will be 4 trackers: Lemmings, Food, Gold, and Morale
+
+    Lemmings - A count of the number of lemmings you currently have
+    available to send into battle.
+
+    Food - Food is a resource you will plunder from armies. It is vital
+    to have as your army grows. Without food, your lemmings will die and
+    your army will diminish. If you're running out of food, you may buy
+    more from the marketplace
+
+    Gold - Gold is the in-game currency used to purchase weapons, armor,
+    units, and food. Without gold, you will be unable to expand and grow
+    stronger. Typically, happy soldiers will need less upkeep, so keeping
+    your soldiers happy will ensure fuller coffers.
+
+    Morale - This is your army's overall happiness and fighting spirit. Morale
+    will have subtle effects on the effectiveness of your army in battle,
+    the size of your army, and the amount of upkeep they need. Be sure to 
+    attend to your troops and give them a break every once in a while to 
+    keep them happy.
