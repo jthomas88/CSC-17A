@@ -17,7 +17,7 @@
 struct Lemming{
     //Properties
     int   size;    //Number of lemmings in army
-    int   ppL;     //ppL (Power Per Lemming)
+    char  gift;    //Code for chosen gift
     float dodge;   //Dodge rate
     //Arrays
     bool  *isDead; //Check if lemming in array is dead

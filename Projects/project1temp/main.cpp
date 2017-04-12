@@ -9,20 +9,31 @@
 #include <iostream>  //Input/Output objects
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
+#include <string>
+#include <cstring>
 
 using namespace std; //Namespace used in system library
 
 //User libraries
 #include "Lemming.h"
+#include "Hud.h"
 
 //Global constants
+const int PERCENT=100;
 
 //Function prototypes
-void initSts(Lemming&,int,int,float);
+void initSts(Lemming&,int,char,float);
 void initLif(Lemming&);
+Hud  initHud(Hud&);
 
+void startOp(Hud&,Lemming&);
+void prntIns(char[]);
+
+void battle(Lemming&,Lemming,Hud&,int);
 void divide(Lemming&,Lemming&);
 void combat(Lemming&,Lemming&);
+Hud  plunder(Hud&,Lemming,Lemming,int);
 void regrou(Lemming&);
 
 //Execution begins here
@@ -31,25 +42,185 @@ int main(int argc, char** argv)
     //Initialize random seed
     srand(time(0));
     
+    //Declare Variables
+    int  cho;
+    int  day=1;
+    char file[]="instructions.dat";
+    
     //Declare lemmings
     Lemming player;
     Lemming enemy;
     
-    //Initialize values
-    initSts(player,50,1,0.5f);
-    initSts(enemy,10,1,0.5f);
+    //Declare HUD
+    Hud hud;
     
-    //Initial Memory Allocation
-    player.isDead=new bool[player.size];    
+    //Initialize values
+    initSts(enemy,10,4,0.5f);
+    
+    //Initial Memory Allocation   
     enemy.isDead=new bool[enemy.size];
     
     //Set all lemmings to 'alive'
-    initLif(player);
-    cout<<endl;
     initLif(enemy);
-    cout<<endl;
     
-    //Initiate Battle
+    //Display title screen
+    
+    //Display Options
+    do{
+        cout<<"1. New Game"<<endl;
+        cout<<"2. Load Game"<<endl;
+        cout<<"3. Instructions"<<endl;
+        cin>>cho;
+        if(cho>3||cho<1)cout<<"Invalid option!"<<endl;
+        
+        switch(cho){
+        case 1: 
+            //Introduction
+            initHud(hud);
+            startOp(hud,player);        
+            break;
+        case 2:
+            //loadGam();
+            break;
+        case 3:
+            //Display Instructions
+            prntIns(file);
+            cout<<endl;
+            break;
+        }
+        
+    }while(cho>2||cho<1);
+    
+    
+    
+    //Display Menu
+    do{
+        //Display HUD and options
+        do{
+        cout<<"Day "<<day<<endl;
+        cout<<"Troops: "<<player.size<<endl;
+        cout<<"Gold  : "<<hud.gold<<endl;
+        cout<<"Food  : "<<hud.food<<endl;
+        cout<<"Morale: "<<hud.morale<<endl;
+        cout<<endl;
+        cout<<"1. Next Battle"<<endl;
+        cout<<"2. Marketplace"<<endl;
+        cout<<"3. Rest"<<endl;
+        cin>>cho;
+        }while(cho>3||cho<1);
+        
+        //Option Branches
+        switch(cho){
+        case 1:
+            //Commence Battle
+            battle(player,enemy,hud,day);
+            break;
+        case 2:
+            //market();
+            break;
+        case 3:
+            //rest();
+            break;
+        default:
+            cout<<"Invalid choice"<<endl;
+        }    
+        
+        //Increment in-game day
+        day++;
+        
+        //Save Progress
+        //saveGam();
+    }while(player.size>0);
+    
+    
+    
+    
+    
+    //Delete Arrays
+    delete []player.isDead;
+    delete []enemy.isDead;
+            
+    //Exit program
+    return 0;
+}
+
+//Initializers
+void initSts(Lemming &l,int size,char gift,float dodge){
+    l.size=size;
+    l.gift=gift;
+    l.dodge=dodge;
+}
+void initLif(Lemming &l){
+    for(int i=0;i<l.size;i++){
+        l.isDead[i]=0;        
+    }
+}
+Hud  initHud(Hud &h){
+    h.gold=100;
+    h.food=100;
+    h.morale=0.0f;
+    
+    return h;
+}
+
+//Introduction Function
+void startOp(Hud &h,Lemming &l){    
+    int cho;
+    
+    cout<<"Greetings!"<<endl<<endl;
+    cout<<"You have been selected to spearhead our new"<<endl
+        <<"military project! You will be granted "<<h.gold<<" gold as"<<endl
+        <<"a starting grant. Use as you'd like! But remember that"<<endl
+        <<"this is all you're getting from us. You'll have to get"<<endl
+        <<"more money on your own. In any case, good luck commander!"<<endl
+        <<"Make us proud."<<endl<<endl;
+    cout<<"~ Project LEMMING"<<endl<<endl;
+
+    //Prompt User for Initial Army Size
+    do{
+        cout<<"How many lemmings will you purchase? (5 Gold/Lemming)"<<endl;
+        cin>>l.size;
+    }while(l.size<1&&l.size>h.gold/5);
+    //Subtract price from total
+    h.gold-=(l.size*5);
+    
+    do{
+        cout<<"Select a gift:"<<endl;
+        cout<<"1. Luck O' The Irish (Starting gold+,Gold find+)"<<endl;
+        cout<<"2. Band of Brothers(Morale boosts+,Morale decrease-)"<<endl;
+        cout<<"3. Party Animals (Rest Bonus+)"<<endl;
+        cout<<"4. I don't like gifts."<<endl;
+        cin>>cho;
+    }while(cho>4||cho<1);
+    
+    //Initialize player with declared army size
+    initSts(l,l.size,cho,0.5f);
+    
+    //Initial player memory allocation
+    l.isDead=new bool[l.size];
+    
+    //Set all lemmings to 'alive'
+    initLif(l);
+    
+    //Display Confirmation 
+    cout<<"You will start with "<<l.size<<" lemmings."<<endl;
+        
+}
+
+//Output Functions
+void prntIns(char file[]){
+    string line;
+    ifstream read;
+    read.open(file);
+    getline(read,line);
+        while(getline(read,line)){
+            cout<<line<<endl;
+        }
+    read.close();
+}
+
+//Battle Phases
+void battle(Lemming &player,Lemming enemy,Hud &h,int day){
     do{
         //Division Phase
         cout<<"Division Phase"<<endl;
@@ -61,35 +232,15 @@ int main(int argc, char** argv)
         combat(player,enemy);
         cout<<endl<<endl;
 
+        //Plunder Phase
+        plunder(h,enemy,player,day);
+        
         //Regroup Phase
         regrou(player);
         regrou(enemy);
-        
+
     }while(player.size!=0&&enemy.size!=0);
-    
-    //Delete Arrays
-    delete []player.isDead;
-    delete []enemy.isDead;
-            
-    //Exit program
-    return 0;
 }
-
-//Initializers
-void initSts(Lemming &l,int size, int power, float dodge){
-    l.size=size;
-    l.ppL=power;
-    l.dodge=dodge;
-}
-void initLif(Lemming &l){
-    for(int i=0;i<l.size;i++){
-        l.isDead[i]=0;        
-    }
-}
-
-
-
-//Battle Phases
 void divide(Lemming &pl,Lemming &en){
     do{
         cout<<"Your Army : "<<pl.size<<" units"<<endl;
@@ -196,4 +347,18 @@ void regrou(Lemming &l){
     for(int i=0;i<l.size;i++){
         l.isDead[i]=0;
     }
+}
+Hud plunder(Hud &h,Lemming en,Lemming pl,int day){
+    for(int i=0;i<en.defeat;i++){
+        h.food+=rand()%(day*5);
+        h.gold+=rand()%(day*5);
+        h.morale+=static_cast<float>(en.defeat)/100;
+        h.morale-=static_cast<float>(pl.defeat)/100;
+    }
+    return h;
+}
+
+//Enemy Function
+Lemming enemy(){
+    
 }
