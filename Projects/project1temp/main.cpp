@@ -10,125 +10,78 @@
 #include <cstdlib>   //Random Generator
 #include <ctime>     //Random Seed
 #include <fstream>   //File IO
-//#include <string>    
-//#include <cstring>
 
 using namespace std; //Namespace used in system library
 
 //User libraries
-#include "Lemming.h"
-#include "Hud.h"
+#include "Lemming.h" //Lemming struct
+#include "Hud.h"     //HUD struct
 
 //Global constants
-const int PERCENT=100;
+const int PERCENT=100; //Percent conversion
 
 //Function prototypes
-void initSts(Lemming&,int,char,float);
-void initLif(Lemming&);
-Hud  initHud(Hud&);
+void initSts(Lemming&,int,char,float); //Set stats for player or enemy
+void initLif(Lemming&);                //Set all lemmings to 'alive'
+Hud  initHud(Hud&);                    //Set default values to HUD
 
-Lemming powerUp(Lemming&,int);
-void rest(Lemming&,Hud&);
+Lemming powerUp(Lemming&,int);         //Powers up enemy lemming based on growth
+void rest(Lemming&,Hud&);              //Rest option
+void market(Lemming&,Hud&);            //Market option
+int  ttlMenu(Lemming&,Lemming&,Hud&,int&,int&);//Title menu
+int  gamMenu(Lemming,Hud,int&,int&);     //Game menu
 
-void startOp(Hud&,Lemming&);
-void prntTxt(char[]);
+void startOp(Hud&,Lemming&);           //Introduction function
+void prntTxt(char[]);                  //Output ASCII data from file
 
-void battle(Lemming&,Lemming,Hud&,int);
-void divide(Lemming&,Lemming&);
-void combat(Lemming&,Lemming&,Lemming,Lemming);
-Hud  plunder(Hud&,Lemming,Lemming,int);
-void regrou(Lemming&);
+void battle(Lemming&,Lemming,Hud&,int);//All battle phases
+void divide(Lemming&,Lemming&);        //Division phase of battle
+void combat(Lemming&,Lemming&,Lemming,Lemming);//Combat phase of battle
+Hud  plunder(Hud&,Lemming,Lemming,int);//Plunder phase of battle
+void regrou(Lemming&);                 //Regroup phase of battle
 
-
-
-void save(Lemming,Hud,int);
-void load(Lemming&,Hud&,int&);
+void save(Lemming,Lemming,Hud,int);    //Save data to binary file
+void load(Lemming&,Lemming&,Hud&,int&);//Load data from binary file
 
 //Execution begins here
-int main(int argc, char** argv) 
-{
+int main(int argc, char** argv) {
     //Initialize random seed
     srand(time(0));
     
     //Declare Variables
-    int  cho;
-    int  day=1;
-    int  growFac=0;
-    bool pass=0;
+    int  cho;       //User inputted choice for various prompts
+    int  day=1;     //Initial day
+    int  growFac=0; //Initial enemy growth factor
     
     //Declare lemmings
-    Lemming player;
-    Lemming enemy;
+    Lemming player; //Player data
+    Lemming enemy;  //Enemy data
     
     //Declare HUD
-    Hud hud;
+    Hud hud;        //HUD data
     
-    //Initialize values
-    initSts(enemy,10,4,0.5f);
-    
-    //Initial Memory Allocation   
-    enemy.isDead=new bool[enemy.size];
-    
-    //Set all lemmings to 'alive'
-    initLif(enemy);
+    //Initialize default enemy values
+    initSts(enemy,10,4,0.5f); 
     
     //Display title screen
     prntTxt("title.txt");
     
-    //Display Options
-    do{
-        cout<<"1. New Game"<<endl;
-        cout<<"2. Load Game"<<endl;
-        cout<<"3. Instructions"<<endl;
-        cout<<"0. Quit"<<endl;
-        cin>>cho;
-        if(cho>3||cho<0)cout<<"Invalid option!"<<endl;
-        
-        switch(cho){
-        case 1: 
-            //Introduction
-            initHud(hud);
-            startOp(hud,player);   
-            pass=1;
-            break;
-        case 2:            
-            load(player,hud,day);
-            break;
-        case 3:
-            //Display Instructions
-            prntTxt("instructions.dat");
-            cout<<endl;
-            break;
-        case 0:
-            return cho;
-            break;
-        }
-        
-        
-    }while(cho>2||cho<0);
+    //Title Menu
+    ttlMenu(player,enemy,hud,day,cho);
+    if(cho==0)return cho;
+  
+    //Initial enemy memory allocation
+    enemy.isDead=new bool[enemy.size];
     
-    
+    //Set all enemy lemmings to 'alive'
+    initLif(enemy);
     
     //Display Menu
     do{
+        //Increase enemy growth factor
         growFac+=5;
         //Display HUD and options
-        do{
-            cout<<"Day "<<day<<endl;
-            cout<<"Troops: "<<player.size<<endl;
-            cout<<"Gold  : "<<hud.gold<<endl;
-            cout<<"Food  : "<<hud.food<<endl;
-            cout<<"Morale: "<<hud.morale<<endl;
-            cout<<endl;
-            cout<<"1. Next Battle"<<endl;
-            cout<<"2. Marketplace"<<endl;
-            cout<<"3. Rest"<<endl;
-            cin>>cho;
-            if(cho==3&&(player.size*3)>hud.food){
-                cout<<"There is not enough food for all of your troops."<<endl;
-                cho=4;
-            }
-        }while(cho>3||cho<1);
+        gamMenu(player,hud,day,cho);
         
         //Option Branches
         switch(cho){
@@ -137,12 +90,18 @@ int main(int argc, char** argv)
                 battle(player,enemy,hud,day);
                 break;
             case 2:
-                //market();
+                //Enter Marketplace
+                market(player,hud);
                 break;
             case 3:
+                //Rest for the day
                 rest(player,hud);
                 break;
+            case 0:
+                return cho;
+                break;
             default:
+                //Display invalid choice message
                 cout<<"Invalid choice"<<endl;
         }    
         
@@ -151,29 +110,22 @@ int main(int argc, char** argv)
         
         //Save Progress
         if(player.size>0){
-            save(player,hud,day);
+            save(player,enemy,hud,day);
             cout<<"GAME SAVED"<<endl<<endl;
         }
         
-        //Reinitialize Enemy
-        
-        delete []enemy.isDead;
-        cout<<"delet succ"<<endl;
-        
-        initSts(enemy,10+growFac,4,0.5f);
-        cout<<"init succ"<<endl;
-        
         //Increase Enemy Power
         powerUp(enemy,growFac);
-        cout<<"powerup succ"<<endl;
+
+        //Reinitialize isDead array
         enemy.isDead=new bool[enemy.size];
-        cout<<"memgen succ"<<endl;
-        initLif(enemy);        
-        
+        initLif(enemy);                
     }while(player.size>0);
 
+    //Display 'game over' message
+    cout<<"GAME OVER"<<endl<<endl;
+    
     //Delete Arrays
-    delete []player.isDead;
     delete []enemy.isDead;
             
     //Exit program
@@ -312,10 +264,8 @@ void divide(Lemming &pl,Lemming &en){
 }
 void combat(Lemming &pl,Lemming &en,Lemming big,Lemming sml){
     int count=0;
-    int pdef=0;
-    int edef=0;
-    pl.defeat=0;
-    en.defeat=0;    
+    int pdef=0,edef=0;
+    pl.defeat=0;en.defeat=0;    
 
     for(int i=0;i<sml.size;i++){
         cout<<"Squad "<<i+1<<" begin"<<endl;
@@ -323,7 +273,8 @@ void combat(Lemming &pl,Lemming &en,Lemming big,Lemming sml){
             //Roll for FS (0=player FS,1=enemy FS)
             if(rand()%2==0){
                 cout<<"Player strikes first!"<<endl;
-                if(en.dodge*100>rand()%100){
+                if(rand()%static_cast<int>(en.dodge*100)>
+                   rand()%static_cast<int>(pl.dodge*100)){
                     cout<<"Attack from player missed!"<<endl;
                 }
                 else{
@@ -390,7 +341,7 @@ void regrou(Lemming &l){
     //Delete old array
     delete []l.isDead;
     //Initialize new array with new size
-    if(l.size!=0){
+    if(l.size>0){
         l.isDead=new bool[count];
     }    
     //Set all new lemmings to 'alive'
@@ -409,16 +360,130 @@ Hud  plunder(Hud &h,Lemming en,Lemming pl,int day){
 }
 
 //Key Game Functions
+int ttlMenu(Lemming &player,Lemming &enemy,Hud &hud,int &day,int &cho){
+    do{
+        cout<<"1. New Game"<<endl;
+        cout<<"2. Load Game"<<endl;
+        cout<<"3. Instructions"<<endl;
+        cout<<"0. Quit"<<endl;
+        //Input choice
+        cin>>cho;
+        //Tell user if input is invalid
+        if(cho>3||cho<0)cout<<"Invalid option!"<<endl;
+        //Option Branches
+        switch(cho){
+        case 1: 
+            //Set default HUD values
+            initHud(hud);
+            //Play Introduction
+            startOp(hud,player);   
+            break;
+        case 2:         
+            //Load Game
+            load(player,enemy,hud,day);
+            break;
+        case 3:
+            //Display Instructions
+            prntTxt("instructions.dat");
+            cout<<endl;
+            break;
+        case 0:
+            //Return 0
+            return cho;
+            break;
+        }               
+    }while(cho>2||cho<0);
+}
+int gamMenu(Lemming player,Hud hud,int &day,int &cho){
+    do{
+        cout<<"Day "<<day<<endl;
+        cout<<"Troops: "<<player.size<<endl;
+        cout<<"Gold  : "<<hud.gold<<endl;
+        cout<<"Food  : "<<hud.food<<endl;
+        cout<<"Morale: "<<hud.morale<<endl;
+        cout<<endl;
+        cout<<"1. Next Battle"<<endl;
+        cout<<"2. Marketplace"<<endl;
+        cout<<"3. Rest"<<endl;
+        cout<<"0. Quit Game"<<endl;
+        //Input choice
+        cin>>cho;
+        //User must have a minimum of 3 food per lemming to rest
+        if(cho==3&&(player.size*3)>hud.food){
+            //Display insufficient food message
+            cout<<"There is not enough food for all of your troops."<<endl;
+            //Send player back into loop
+            cho=4;
+        }
+    }while(cho>3||cho<0);
+    
+    return cho;
+}
+
 Lemming powerUp(Lemming &en,int gf){
     en.size+=rand()%gf;
     en.dodge+=static_cast<float>(rand()%gf)/PERCENT;
     
     return en;
 }
-void    market(Lemming &player,Hud &hud){
+void market(Lemming &player,Hud &hud){
+    int cho;
     
+    do{
+        cout<<"Welcome! Make a selection from our fine wares."<<endl;
+        cout<<"1. Buy Soldiers"<<endl;
+        cout<<"2. Agility Training"<<endl;
+        cout<<"0. Leave Market"<<endl;
+        cin>>cho;
+        if(cho>2||cho<0)cout<<"We don't sell that here."<<endl;
+    }while(cho>2&&cho<0);    
+    
+    switch(cho){
+        case 1:
+            do{
+                cout<<"We sell our combat lemmings for 100 gold each."<<endl;
+                cout<<"How many would you like?"<<endl;
+                cin>>cho;
+                if(cho*100>hud.gold){
+                    cout<<"You have insufficient funds."<<endl;
+                }
+            }while(cho*100>hud.gold);
+            if(cho==0){
+                cout<<"Suit yourself"<<endl;
+            }
+            else{
+                hud.gold-=cho*100;
+                player.size+=cho;
+                delete[]player.isDead;
+                player.isDead=new bool[player.size];
+                initLif(player);
+            }
+            break;
+        case 2: 
+            cout<<"Agility training will make your lemmings better at "<<endl
+                <<"dealing and dodging hits in battle. We charge a fee "<<endl
+                <<"of 25 gold per lemming per hour for training."<<endl;
+            do{
+                cout<<"How many hours of training would you like?"<<endl;
+                cin>>cho;
+                if(cho*player.size*25>hud.gold){
+                    cout<<"You have insufficient funds."<<endl;
+                }
+            }while(cho*player.size*25>hud.gold);
+            if(cho==0){
+                cout<<"Suit yourself"<<endl;
+            }
+            else{
+                hud.gold-=cho*player.size*25;
+                player.dodge+=static_cast<float>(cho)/PERCENT;
+            }
+            break;
+        case 0:
+            cout<<"Come again soon..."<<endl;
+            break;
+    }
 }
-void    rest(Lemming &l,Hud &h){
+void rest(Lemming &l,Hud &h){
     int birth=0;
     h.food-=(l.size*3);
     h.morale+=static_cast<float>(rand()%50+1)/PERCENT;
@@ -436,7 +501,7 @@ void    rest(Lemming &l,Hud &h){
 }
 
 //Save/Load
-void save(Lemming pl,Hud h,int day){
+void save(Lemming pl,Lemming en,Hud h,int day){
     fstream file;
     char *par1;
     par1=reinterpret_cast<char*>(&pl.size);
@@ -446,6 +511,9 @@ void save(Lemming pl,Hud h,int day){
     file.write(reinterpret_cast<char*>(&pl.gift), sizeof(pl.gift));
     file.write(reinterpret_cast<char*>(&pl.dodge),sizeof(pl.dodge));
     
+    file.write(reinterpret_cast<char*>(&en.size),sizeof(en.size));
+    file.write(reinterpret_cast<char*>(&en.dodge),sizeof(en.dodge));
+    
     file.write(reinterpret_cast<char*>(&h.gold),sizeof(h.gold));
     file.write(reinterpret_cast<char*>(&h.food),sizeof(h.food));
     file.write(reinterpret_cast<char*>(&h.morale),sizeof(h.morale));
@@ -454,7 +522,7 @@ void save(Lemming pl,Hud h,int day){
     
     file.close();    
 }
-void load(Lemming &pl,Hud &h,int &day){
+void load(Lemming &pl,Lemming &en,Hud &h,int &day){
     //Instantiate file stream object
     fstream file;
     //Open file for binary output
@@ -463,6 +531,9 @@ void load(Lemming &pl,Hud &h,int &day){
     file.read(reinterpret_cast<char*>(&pl.size),sizeof(pl.size));
     file.read(reinterpret_cast<char*>(&pl.gift),sizeof(pl.gift));
     file.read(reinterpret_cast<char*>(&pl.dodge),sizeof(pl.dodge));
+    //Read enemy data
+    file.read(reinterpret_cast<char*>(&en.size),sizeof(en.size));
+    file.read(reinterpret_cast<char*>(&en.dodge),sizeof(en.dodge));
     //Read HUD data
     file.read(reinterpret_cast<char*>(&h.gold),sizeof(h.gold));
     file.read(reinterpret_cast<char*>(&h.food),sizeof(h.food));
@@ -475,22 +546,3 @@ void load(Lemming &pl,Hud &h,int &day){
     pl.isDead=new bool[pl.size];
     initLif(pl);
 }
-
-/*
-char *ptr2;
-    
-    fstream file;
-    
-    //tst=reinterpret_cast<char*>(&tst);
-    
-    file.open("data.dat", ios::out|ios::binary);
-    file.write(reinterpret_cast<char*>(&poo),sizeof(poo));
-    file.close();
-    
-    poo=5;
-    
-    file.open("data.dat",ios::in|ios::binary);
-    file.read(reinterpret_cast<char*>(&poo),sizeof(poo));
-    cout<<poo;
-    file.close();
- * */
