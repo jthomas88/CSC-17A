@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>History.h</itemPath>
       <itemPath>Hud.h</itemPath>
       <itemPath>Lemming.h</itemPath>
     </logicalFolder>
@@ -42,6 +43,8 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="History.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Hud.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Lemming.h" ex="false" tool="3" flavor2="0">
@@ -77,6 +80,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="History.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Hud.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Lemming.h" ex="false" tool="3" flavor2="0">

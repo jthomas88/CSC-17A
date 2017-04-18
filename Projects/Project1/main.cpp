@@ -15,7 +15,7 @@ using namespace std; //Namespace used in system library
 
 //User libraries
 #include "Lemming.h" //Lemming struct
-#include "Hud.h"     //HUD struct
+#include "Hud.h"     //Hud struct
 
 //Global constants
 const int PERCENT=100; //Percent conversion
@@ -23,7 +23,7 @@ const int PERCENT=100; //Percent conversion
 //Function prototypes
 void initSts(Lemming&,int,float); //Set stats for player or enemy
 void initLif(Lemming&);                //Set all lemmings to 'alive'
-Hud  initHud(Hud&);                    //Set default values to HUD
+Hud  initHud(Hud&);                    //Set default values to HUD          
 
 Lemming powerUp(Lemming&,int);         //Powers up enemy lemming based on growth
 void rest(Lemming&,Hud&);              //Rest option
@@ -32,7 +32,7 @@ int  ttlMenu(Lemming&,Lemming&,Hud&,int&,int&);//Title menu
 int  gamMenu(Lemming,Hud,int&,int&);   //Game menu
 
 void startOp(Hud&,Lemming&);           //Introduction function
-void prntTxt(char[]);                  //Output ASCII data from file
+void prntTxt(char[]);                  //Output ASCII data from file         
 
 void battle(Lemming&,Lemming,Hud&,int);//All battle phases
 void divide(Lemming&,Lemming&);        //Division phase of battle
@@ -206,8 +206,7 @@ void startOp(Hud &h,Lemming &l){
     initLif(l);
     
     //Display Confirmation 
-    cout<<"You will start with "<<l.size<<" lemmings."<<endl;
-        
+    cout<<"You will start with "<<l.size<<" lemmings."<<endl;        
 }
 
 //Battle Phases
@@ -358,8 +357,7 @@ void combat(Lemming &pl,Lemming &en,Lemming big,Lemming sml){
         cout<<en.isDead[i];
         if(i%50==49)cout<<endl;
     }
-    cout<<endl;
-    
+    cout<<endl;    
 }
 void regrou(Lemming &l){
     //Initialize counter
@@ -460,7 +458,6 @@ int gamMenu(Lemming player,Hud hud,int &day,int &cho){
     //Return menu choice
     return cho;
 }
-
 Lemming powerUp(Lemming &en,int gf){
     //Increase size based on growth factor
     en.size+=rand()%gf;
@@ -491,9 +488,9 @@ void market(Lemming &player,Hud &hud){
                 //Buy soldier prompt
                 cout<<"We sell our combat lemmings for 100 gold each."<<endl;
                 cout<<"How many would you like?"<<endl;
-                //Inpur amount to purchase
+                //Input amount to purchase
                 cin>>cho;
-                //Display insifficient funds message
+                //Display insufficient funds message
                 if(cho*100>hud.gold){
                     cout<<"You have insufficient funds."<<endl;
                 }

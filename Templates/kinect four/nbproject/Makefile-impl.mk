@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=01_CPP_Template
+PROJECTNAME=kinect four
 
 # Active Configuration
 DEFAULTCONF=Debug
