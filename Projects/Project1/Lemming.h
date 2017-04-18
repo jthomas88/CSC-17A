@@ -15,10 +15,15 @@
 #define LEMMING_H
 
 struct Lemming{
-    int   size;  //Number of lemmings in army
-    int   ppL;   //ppL (Power Per Lemming)
-    float dodge; //Dodge rate
-    int   *army; //Army of lemmings
+    //Properties
+    int   size;    //Number of lemmings in army
+    char  gift;    //Code for chosen gift
+    float dodge;   //Dodge rate
+    //Arrays
+    bool  *isDead; //Check if lemming in array is dead
+    //Increments
+    int defeat;
+    int squad;
 };
 
 #endif /* LEMMING_H */
