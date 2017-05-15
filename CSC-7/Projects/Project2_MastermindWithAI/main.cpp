@@ -26,6 +26,8 @@ void dspPins(char[][SIZE],char[][SIZE]);
 void dspTtl(char[]);
 
 char guess(int,char[],char[][SIZE]);
+char ai(int,char[],char[][SIZE],char[][SIZE]);
+
 char check(char[][SIZE],char[],char[],int);
 void sortPin(char[][SIZE],int);
 
@@ -52,6 +54,7 @@ int main(int argc, char** argv)
     char hist[4][SIZE]={};              //Array holding previous guesses
     char code[4]={};                    //Computer generated answer code
     char gues[4]={};                    //User generated guess
+    char trak[4]={'0','0','0','0'}; 
     char pins[4][SIZE]={'-','-','-','-',//Pins to determine correct or incorrect
                       '-','-','-','-',
                       '-','-','-','-',
@@ -88,6 +91,7 @@ int main(int argc, char** argv)
         
         //Prompt user for guess
         cout<<"Enter your guess:"<<endl;
+        //ai(turn,trak,pins,hist);
         guess(turn,gues,hist);
 
         //Check answer
@@ -129,7 +133,7 @@ int main(int argc, char** argv)
 void genCode(char code[]){
     for(int i=0;i<4;i++){
         //Generate random character 1-7
-        code[i]=rand()%6+49;
+        code[i]=rand()%10+48;
     }
 }
 //Truth functions
@@ -294,3 +298,57 @@ void sortPin(char pins[][SIZE],int turn){
     }
 }
 
+
+/*
+char ai(int turn,char trak[],char pins[][SIZE],char hist[][SIZE]){
+    //Input answer
+    if(turn==1){
+        for(int i=0;i<4;i++){
+            trak[i]++;
+        }
+    }
+    if(turn>1){
+        for(int i=0;i<4;i++){
+            if(pins[i][turn-2]=='-'){
+                trak[i]++;
+            }
+            if(pins[i][turn-2]=='X'){
+                //trak[i+1]
+            }
+        }
+    }
+   
+    if(turn==1){
+        trak[0]++;
+        trak[1]++;
+        trak[2]++;
+        trak[3]++;
+    }
+    if(pins[0][turn-2]=='-'&&turn>1){
+        trak[0]++;
+        trak[1]++;
+        trak[2]++;
+        trak[3]++;
+    }
+    if(pins[0][turn-2]=='O'){
+        trak[1]++;
+        trak[2]++;
+        trak[3]++;
+    }
+    if(pins[0][turn-2]=='X'){
+        char temp;
+        temp=trak[0];
+        trak[0]=trak[1];
+        trak[1]=temp;
+    }
+
+    //Assign guess to current spot on 'previous guesses' array
+    for(int i=9;i>=0;i--){
+        for(int j=0;j<4;j++){
+            hist[j][turn-1]=trak[j];
+        }
+    }
+    //Return guessed value
+    return *trak;
+}
+*/
