@@ -80,14 +80,15 @@ int main(int argc, char** argv) {
     cout<<"0+1    : "<<top<<endl;
     cout<<"Top    : "<<RSHash(top)<<endl;
     
-    string test="Then out spake brave Horatius, The Captain of the Gate:";
+    string test="Then out spake brave Hous, The Captain of the Gate:";
+    
+    if(to_string(RSHash(test))==zz)cout<<"valid";
     
 
     return 0;
 }
 
-unsigned int RSHash(const std::string& str)
-{
+unsigned int RSHash(const std::string& str){
    unsigned int b    = 378551;
    unsigned int a    = 63689;
    unsigned int hash = 0;
@@ -100,9 +101,7 @@ unsigned int RSHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int JSHash(const std::string& str)
-{
+unsigned int JSHash(const std::string& str){
    unsigned int hash = 1315423911;
 
    for(std::size_t i = 0; i < str.length(); i++)
@@ -112,9 +111,7 @@ unsigned int JSHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int PJWHash(const std::string& str)
-{
+unsigned int PJWHash(const std::string& str){
    unsigned int BitsInUnsignedInt = (unsigned int)(sizeof(unsigned int) * 8);
    unsigned int ThreeQuarters     = (unsigned int)((BitsInUnsignedInt  * 3) / 4);
    unsigned int OneEighth         = (unsigned int)(BitsInUnsignedInt / 8);
@@ -134,9 +131,7 @@ unsigned int PJWHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int ELFHash(const std::string& str)
-{
+unsigned int ELFHash(const std::string& str){
    unsigned int hash = 0;
    unsigned int x    = 0;
 
@@ -152,9 +147,7 @@ unsigned int ELFHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int BKDRHash(const std::string& str)
-{
+unsigned int BKDRHash(const std::string& str){
    unsigned int seed = 131; // 31 131 1313 13131 131313 etc..
    unsigned int hash = 0;
 
@@ -165,9 +158,7 @@ unsigned int BKDRHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int SDBMHash(const std::string& str)
-{
+unsigned int SDBMHash(const std::string& str){
    unsigned int hash = 0;
 
    for(std::size_t i = 0; i < str.length(); i++)
@@ -177,9 +168,7 @@ unsigned int SDBMHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int DJBHash(const std::string& str)
-{
+unsigned int DJBHash(const std::string& str){
    unsigned int hash = 5381;
 
    for(std::size_t i = 0; i < str.length(); i++)
@@ -189,9 +178,7 @@ unsigned int DJBHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int DEKHash(const std::string& str)
-{
+unsigned int DEKHash(const std::string& str){
    unsigned int hash = static_cast<unsigned int>(str.length());
 
    for(std::size_t i = 0; i < str.length(); i++)
@@ -201,9 +188,7 @@ unsigned int DEKHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int BPHash(const std::string& str)
-{
+unsigned int BPHash(const std::string& str){
    unsigned int hash = 0;
    for(std::size_t i = 0; i < str.length(); i++)
    {
@@ -212,9 +197,7 @@ unsigned int BPHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int FNVHash(const std::string& str)
-{
+unsigned int FNVHash(const std::string& str){
    const unsigned int fnv_prime = 0x811C9DC5;
    unsigned int hash = 0;
    for(std::size_t i = 0; i < str.length(); i++)
@@ -225,9 +208,7 @@ unsigned int FNVHash(const std::string& str)
 
    return hash;
 }
-
-unsigned int APHash(const std::string& str)
-{
+unsigned int APHash(const std::string& str){
    unsigned int hash = 0xAAAAAAAA;
 
    for(std::size_t i = 0; i < str.length(); i++)

@@ -56,19 +56,7 @@ int main(int argc, char** argv) {
     int power[10]={};                 //Array to hold occurrences of each range
     
     string h;
-    
-    /*
-    //RS Hash stats
-    do{
-        hash=sample+to_string(count);
-        //cout<<hash<<endl;
-        //cout<<RSHash(hash)<<endl<<endl;        
-        count++;
-    }while(RSHash(hash)>1000);
-    cout<<hash<<endl;
-    cout<<RSHash(hash);
-    */
-    
+
     //RS Hash
     hcRS(power,sample);
     cout<<"RS Hash"<<endl;
@@ -119,6 +107,183 @@ int main(int argc, char** argv) {
     cout<<endl<<endl;
 
     return 0;
+}
+
+
+void hcRS(int power[],string nonce){
+    unsigned int count=0;
+    string hash;
+    do{   
+        
+        hash=nonce+to_string(count);
+        if(RSHash(hash)<pow(10,10))power[0]++;
+        if(RSHash(hash)<pow(10,9))power[9]++;
+        if(RSHash(hash)<pow(10,8))power[8]++;
+        if(RSHash(hash)<pow(10,7))power[7]++;
+        if(RSHash(hash)<pow(10,6))power[6]++;
+        if(RSHash(hash)<pow(10,5))power[5]++;
+        if(RSHash(hash)<pow(10,4))power[4]++;
+        if(RSHash(hash)<pow(10,3))power[3]++;
+        if(RSHash(hash)<pow(10,2))power[2]++;
+        count++;
+    }while(RSHash(hash)>100||count<1000000);
+}
+void hcBKDR(int power[],string nonce){
+    unsigned int count=0;
+    string hash;
+    do{
+        hash=nonce+to_string(count);
+        if(BKDRHash(hash)<pow(10,10))power[0]++;
+        if(BKDRHash(hash)<pow(10,9))power[9]++;
+        if(BKDRHash(hash)<pow(10,8))power[8]++;
+        if(BKDRHash(hash)<pow(10,7))power[7]++;
+        if(BKDRHash(hash)<pow(10,6))power[6]++;
+        if(BKDRHash(hash)<pow(10,5))power[5]++;
+        if(BKDRHash(hash)<pow(10,4))power[4]++;
+        if(BKDRHash(hash)<pow(10,3))power[3]++;
+        if(BKDRHash(hash)<pow(10,2))power[2]++;
+        count++;
+    }while(BKDRHash(hash)>100||count<1000000);
+}
+void hcSDBM(int power[],string nonce){
+    unsigned int count=0;
+    string hash;
+    do{   
+        hash=nonce+to_string(count);
+        if(SDBMHash(hash)<pow(10,10))power[0]++;
+        if(SDBMHash(hash)<pow(10,9))power[9]++;
+        if(SDBMHash(hash)<pow(10,8))power[8]++;
+        if(SDBMHash(hash)<pow(10,7))power[7]++;
+        if(SDBMHash(hash)<pow(10,6))power[6]++;
+        if(SDBMHash(hash)<pow(10,5))power[5]++;
+        if(SDBMHash(hash)<pow(10,4))power[4]++;
+        if(SDBMHash(hash)<pow(10,3))power[3]++;
+        if(SDBMHash(hash)<pow(10,2))power[2]++;
+        count++;
+    }while(SDBMHash(hash)>100||count<1000000);
+}
+void hcDJB(int power[],string nonce){
+    unsigned int count=0;
+    string hash;
+    do{   
+        hash=nonce+to_string(count);
+        if(DJBHash(hash)<pow(10,10))power[0]++;
+        if(DJBHash(hash)<pow(10,9))power[9]++;
+        if(DJBHash(hash)<pow(10,8))power[8]++;
+        if(DJBHash(hash)<pow(10,7))power[7]++;
+        if(DJBHash(hash)<pow(10,6))power[6]++;
+        if(DJBHash(hash)<pow(10,5))power[5]++;
+        if(DJBHash(hash)<pow(10,4))power[4]++;
+        if(DJBHash(hash)<pow(10,3))power[3]++;
+        if(DJBHash(hash)<pow(10,2))power[2]++;
+        count++;
+    }while(DJBHash(hash)>100||count<1000000);
+}
+void hcDEK(int power[],string nonce){
+    unsigned int count=0;
+    string hash;
+    do{   
+        hash=nonce+to_string(count);
+        if(DEKHash(hash)<pow(10,10))power[0]++;
+        if(DEKHash(hash)<pow(10,9))power[9]++;
+        if(DEKHash(hash)<pow(10,8))power[8]++;
+        if(DEKHash(hash)<pow(10,7))power[7]++;
+        if(DEKHash(hash)<pow(10,6))power[6]++;
+        if(DEKHash(hash)<pow(10,5))power[5]++;
+        if(DEKHash(hash)<pow(10,4))power[4]++;
+        if(DEKHash(hash)<pow(10,3))power[3]++;
+        if(DEKHash(hash)<pow(10,2))power[2]++;
+        count++;
+    }while(DEKHash(hash)>100||count<1000000);
+}
+void hcBP(int power[],string nonce){
+    unsigned int count=0;
+    string hash;
+    do{   
+        hash=nonce+to_string(count);
+        if(BPHash(hash)<pow(10,10))power[0]++;
+        if(BPHash(hash)<pow(10,9))power[9]++;
+        if(BPHash(hash)<pow(10,8))power[8]++;
+        if(BPHash(hash)<pow(10,7))power[7]++;
+        if(BPHash(hash)<pow(10,6))power[6]++;
+        if(BPHash(hash)<pow(10,5))power[5]++;
+        if(BPHash(hash)<pow(10,4))power[4]++;
+        if(BPHash(hash)<pow(10,3))power[3]++;
+        if(BPHash(hash)<pow(10,2))power[2]++;
+        count++;
+    }while(BPHash(hash)>100||count<1000000);
+}
+void hcFNV(int power[],string nonce){
+    unsigned int count=0;
+    string hash;
+    do{   
+        hash=nonce+to_string(count);
+        if(FNVHash(hash)<pow(10,10))power[0]++;
+        if(FNVHash(hash)<pow(10,9))power[9]++;
+        if(FNVHash(hash)<pow(10,8))power[8]++;
+        if(FNVHash(hash)<pow(10,7))power[7]++;
+        if(FNVHash(hash)<pow(10,6))power[6]++;
+        if(FNVHash(hash)<pow(10,5))power[5]++;
+        if(FNVHash(hash)<pow(10,4))power[4]++;
+        if(FNVHash(hash)<pow(10,3))power[3]++;
+        if(FNVHash(hash)<pow(10,2))power[2]++;
+        count++;
+    }while(FNVHash(hash)>100||count<1000000);
+}
+
+void reset(int power[]){
+    for(int i=0;i<10;i++){
+        power[i]=0;
+    }
+}
+void dispRes(int power[]){
+    cout<<"Less than 10^10 : "<<power[0]<<endl;
+    cout<<"Less than 10^9  : "<<power[9]<<endl;
+    cout<<"Less than 10^8  : "<<power[8]<<endl;
+    cout<<"Less than 10^7  : "<<power[7]<<endl;
+    cout<<"Less than 10^6  : "<<power[6]<<endl;
+    cout<<"Less than 10^5  : "<<power[5]<<endl;
+    cout<<"Less than 10^4  : "<<power[4]<<endl;
+    cout<<"Less than 10^3  : "<<power[3]<<endl;
+    cout<<"Less than 10^2  : "<<power[2]<<endl;
+}
+
+void hcPJW(int power[],string nonce){
+    unsigned int count=0;
+    string hash;
+    do{  
+        //cout<<count<<endl;
+        hash=nonce+to_string(count);
+        //cout<<PJWHash(hash)<<endl;
+        if(PJWHash(hash)<pow(10,10))power[0]++;
+        if(PJWHash(hash)<pow(10,9))power[9]++;
+        if(PJWHash(hash)<pow(10,8))power[8]++;
+        if(PJWHash(hash)<pow(10,7))power[7]++;
+        if(PJWHash(hash)<pow(10,6))power[6]++;
+        if(PJWHash(hash)<pow(10,5))power[5]++;
+        if(PJWHash(hash)<pow(10,4))power[4]++;
+        if(PJWHash(hash)<pow(10,3))power[3]++;
+        if(PJWHash(hash)<pow(10,2))power[2]++;
+        count++;
+    }while(PJWHash(hash)>100000||count==4294967295);
+}
+void hcELF(int power[],string nonce){
+    int count=0;
+    string hash;
+    do{   
+        hash=nonce+to_string(count);
+        //cout<<ELFHash(hash)<<endl;
+        if(ELFHash(hash)<pow(10,10))power[0]++;
+        if(ELFHash(hash)<pow(10,9))power[9]++;
+        if(ELFHash(hash)<pow(10,8))power[8]++;
+        if(ELFHash(hash)<pow(10,7))power[7]++;
+        if(ELFHash(hash)<pow(10,6))power[6]++;
+        if(ELFHash(hash)<pow(10,5))power[5]++;
+        if(ELFHash(hash)<pow(10,4))power[4]++;
+        if(ELFHash(hash)<pow(10,3))power[3]++;
+        if(ELFHash(hash)<pow(10,2))power[2]++;
+        count++;
+    }while(ELFHash(hash)>1000||count==4294967295);
 }
 
 unsigned int RSHash(const std::string& str)
@@ -262,180 +427,4 @@ unsigned int APHash(const std::string& str)
    }
 
    return hash;
-}
-
-void hcRS(int power[],string nonce){
-    unsigned int count=0;
-    string hash;
-    do{   
-        hash=nonce+to_string(count);
-        //cout<<RSHash(hash)<<endl;
-        if(RSHash(hash)<pow(10,10))power[0]++;
-        if(RSHash(hash)<pow(10,9))power[9]++;
-        if(RSHash(hash)<pow(10,8))power[8]++;
-        if(RSHash(hash)<pow(10,7))power[7]++;
-        if(RSHash(hash)<pow(10,6))power[6]++;
-        if(RSHash(hash)<pow(10,5))power[5]++;
-        if(RSHash(hash)<pow(10,4))power[4]++;
-        if(RSHash(hash)<pow(10,3))power[3]++;
-        if(RSHash(hash)<pow(10,2))power[2]++;
-        count++;
-    }while(RSHash(hash)>10000||count==4294967295);
-}
-void hcBKDR(int power[],string nonce){
-    unsigned int count=0;
-    string hash;
-    do{   
-        hash=nonce+to_string(count);
-        //cout<<BKDRHash(hash)<<endl;
-        if(BKDRHash(hash)<pow(10,10))power[0]++;
-        if(BKDRHash(hash)<pow(10,9))power[9]++;
-        if(BKDRHash(hash)<pow(10,8))power[8]++;
-        if(BKDRHash(hash)<pow(10,7))power[7]++;
-        if(BKDRHash(hash)<pow(10,6))power[6]++;
-        if(BKDRHash(hash)<pow(10,5))power[5]++;
-        if(BKDRHash(hash)<pow(10,4))power[4]++;
-        if(BKDRHash(hash)<pow(10,3))power[3]++;
-        count++;
-    }while(BKDRHash(hash)>10000||count==4294967295);
-}
-void hcSDBM(int power[],string nonce){
-    int count=0;
-    string hash;
-    do{   
-        hash=nonce+to_string(count);
-        //cout<<SDBMHash(hash)<<endl;
-        if(SDBMHash(hash)<pow(10,10))power[0]++;
-        if(SDBMHash(hash)<pow(10,9))power[9]++;
-        if(SDBMHash(hash)<pow(10,8))power[8]++;
-        if(SDBMHash(hash)<pow(10,7))power[7]++;
-        if(SDBMHash(hash)<pow(10,6))power[6]++;
-        if(SDBMHash(hash)<pow(10,5))power[5]++;
-        if(SDBMHash(hash)<pow(10,4))power[4]++;
-        if(SDBMHash(hash)<pow(10,3))power[3]++;
-        count++;
-    }while(SDBMHash(hash)>1000);
-}
-void hcDJB(int power[],string nonce){
-    int count=0;
-    string hash;
-    do{   
-        hash=nonce+to_string(count);
-        //cout<<DJBHash(hash)<<endl;
-        if(DJBHash(hash)<pow(10,10))power[0]++;
-        if(DJBHash(hash)<pow(10,9))power[9]++;
-        if(DJBHash(hash)<pow(10,8))power[8]++;
-        if(DJBHash(hash)<pow(10,7))power[7]++;
-        if(DJBHash(hash)<pow(10,6))power[6]++;
-        if(DJBHash(hash)<pow(10,5))power[5]++;
-        if(DJBHash(hash)<pow(10,4))power[4]++;
-        if(DJBHash(hash)<pow(10,3))power[3]++;
-        count++;
-    }while(DJBHash(hash)>1000);
-}
-void hcDEK(int power[],string nonce){
-    int count=0;
-    string hash;
-    do{   
-        hash=nonce+to_string(count);
-        //cout<<DEKHash(hash)<<endl;
-        if(DEKHash(hash)<pow(10,10))power[0]++;
-        if(DEKHash(hash)<pow(10,9))power[9]++;
-        if(DEKHash(hash)<pow(10,8))power[8]++;
-        if(DEKHash(hash)<pow(10,7))power[7]++;
-        if(DEKHash(hash)<pow(10,6))power[6]++;
-        if(DEKHash(hash)<pow(10,5))power[5]++;
-        if(DEKHash(hash)<pow(10,4))power[4]++;
-        if(DEKHash(hash)<pow(10,3))power[3]++;
-        count++;
-    }while(DEKHash(hash)>1000);
-}
-void hcBP(int power[],string nonce){
-    int count=0;
-    string hash;
-    do{   
-        hash=nonce+to_string(count);
-        //cout<<BPHash(hash)<<endl;
-        if(BPHash(hash)<pow(10,10))power[0]++;
-        if(BPHash(hash)<pow(10,9))power[9]++;
-        if(BPHash(hash)<pow(10,8))power[8]++;
-        if(BPHash(hash)<pow(10,7))power[7]++;
-        if(BPHash(hash)<pow(10,6))power[6]++;
-        if(BPHash(hash)<pow(10,5))power[5]++;
-        if(BPHash(hash)<pow(10,4))power[4]++;
-        if(BPHash(hash)<pow(10,3))power[3]++;
-        count++;
-    }while(BPHash(hash)>1000);
-}
-void hcFNV(int power[],string nonce){
-    int count=0;
-    string hash;
-    do{   
-        hash=nonce+to_string(count);
-        //cout<<FNVHash(hash)<<endl;
-        if(FNVHash(hash)<pow(10,10))power[0]++;
-        if(FNVHash(hash)<pow(10,9))power[9]++;
-        if(FNVHash(hash)<pow(10,8))power[8]++;
-        if(FNVHash(hash)<pow(10,7))power[7]++;
-        if(FNVHash(hash)<pow(10,6))power[6]++;
-        if(FNVHash(hash)<pow(10,5))power[5]++;
-        if(FNVHash(hash)<pow(10,4))power[4]++;
-        if(FNVHash(hash)<pow(10,3))power[3]++;
-        count++;
-    }while(FNVHash(hash)>1000);
-}
-
-void reset(int power[]){
-    for(int i=0;i<10;i++){
-        power[i]=0;
-    }
-}
-void dispRes(int power[]){
-    cout<<"Less than 10^10 : "<<power[0]<<endl;
-    cout<<"Less than 10^9  : "<<power[9]<<endl;
-    cout<<"Less than 10^8  : "<<power[8]<<endl;
-    cout<<"Less than 10^7  : "<<power[7]<<endl;
-    cout<<"Less than 10^6  : "<<power[6]<<endl;
-    cout<<"Less than 10^5  : "<<power[5]<<endl;
-    cout<<"Less than 10^4  : "<<power[4]<<endl;
-    cout<<"Less than 10^3  : "<<power[3]<<endl;
-    cout<<"Less than 10^2  : "<<power[2]<<endl;
-}
-
-void hcPJW(int power[],string nonce){
-    unsigned int count=0;
-    string hash;
-    do{  
-        //cout<<count<<endl;
-        hash=nonce+to_string(count);
-        //cout<<PJWHash(hash)<<endl;
-        if(PJWHash(hash)<pow(10,10))power[0]++;
-        if(PJWHash(hash)<pow(10,9))power[9]++;
-        if(PJWHash(hash)<pow(10,8))power[8]++;
-        if(PJWHash(hash)<pow(10,7))power[7]++;
-        if(PJWHash(hash)<pow(10,6))power[6]++;
-        if(PJWHash(hash)<pow(10,5))power[5]++;
-        if(PJWHash(hash)<pow(10,4))power[4]++;
-        if(PJWHash(hash)<pow(10,3))power[3]++;
-        if(PJWHash(hash)<pow(10,2))power[2]++;
-        count++;
-    }while(PJWHash(hash)>100000||count==4294967295);
-}
-void hcELF(int power[],string nonce){
-    int count=0;
-    string hash;
-    do{   
-        hash=nonce+to_string(count);
-        //cout<<ELFHash(hash)<<endl;
-        if(ELFHash(hash)<pow(10,10))power[0]++;
-        if(ELFHash(hash)<pow(10,9))power[9]++;
-        if(ELFHash(hash)<pow(10,8))power[8]++;
-        if(ELFHash(hash)<pow(10,7))power[7]++;
-        if(ELFHash(hash)<pow(10,6))power[6]++;
-        if(ELFHash(hash)<pow(10,5))power[5]++;
-        if(ELFHash(hash)<pow(10,4))power[4]++;
-        if(ELFHash(hash)<pow(10,3))power[3]++;
-        if(ELFHash(hash)<pow(10,2))power[2]++;
-        count++;
-    }while(ELFHash(hash)>1000||count==4294967295);
 }
