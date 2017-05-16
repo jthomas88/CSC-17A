@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     
     //Declare arrays 
     char hist[4][SIZE]={};              //Array holding previous guesses
-    char code[4]={};                    //Computer generated answer code
+    char code[4]={'1','1','3','1'};     //Computer generated answer code
     char gues[4]={};                    //User generated guess
     char trak[4]={'0','0','0','0'}; 
     char pins[4][SIZE]={'-','-','-','-',//Pins to determine correct or incorrect
@@ -77,10 +77,11 @@ int main(int argc, char** argv)
     cin.get(temp);
     
     //Generate Code
-    do{
-        genCode(code);
-    //Generate until code with no duplicate numbers is created    
-    }while(isDupe(code));
+    //for(int i=0;i<100;i++){
+    //    genCode(code);   
+        dspCode(code);
+        cout<<endl;
+    //}
     
     for(int i=0;i<SIZE;i++){
         //Output HUD
@@ -173,9 +174,10 @@ void dspCode(char code[]){
     string color; //Color code template
     
     for(int i=0;i<4;i++){
-        col=code[i]; //Set code to corresponding number
-        color="\033[4"+col+"m"; //Set color
-        cout<<color<<' '<<code[i]<<' '; //Output number and bg color
+        //col=code[i]; //Set code to corresponding number
+        //color="\033[4"+col+"m"; //Set color
+        //cout<<color<<' '<<code[i]<<' '; //Output number and bg color
+        cout<<code[i]<<' ';
     }
 }
 void dspPins(char hist[][SIZE],char pins[][SIZE]){
@@ -260,12 +262,14 @@ char check(char pins[][SIZE],char code[],char gues[],int turn){
     for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
             if(code[i]==gues[j]){
-                pins[i][turn-1]='X';
-                //Break out of loop if number found
+                pins[j][turn-1]='X';
                 j=4;
             }
         }      
     }
+    
+    sortPin(pins,turn);
+    
     //Check for correct number/correct spot
     for(int i=0;i<4;i++){
         if(code[i]==gues[i]){
@@ -351,4 +355,4 @@ char ai(int turn,char trak[],char pins[][SIZE],char hist[][SIZE]){
     //Return guessed value
     return *trak;
 }
-*/
+ * */

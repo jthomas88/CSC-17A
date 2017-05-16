@@ -18,16 +18,8 @@
 #include "GeneralHashFunctions.h"
 
 unsigned int RSHash(const std::string&);
-unsigned int JSHash(const std::string&);
-unsigned int PJWHash(const std::string&);
-unsigned int ELFHash(const std::string&);
-unsigned int BKDRHash(const std::string&);
-unsigned int SDBMHash(const std::string&);
-unsigned int DJBHash(const std::string&);
-unsigned int DEKHash(const std::string&);
-unsigned int BPHash(const std::string&);
-unsigned int FNVHash(const std::string&);
-unsigned int APHash(const std::string&);
+
+bool validat(std::string,std::string,std::string,std::string);
 
 using namespace std;
 
@@ -80,11 +72,16 @@ int main(int argc, char** argv) {
     cout<<"0+1    : "<<top<<endl;
     cout<<"Top    : "<<RSHash(top)<<endl;
     
+<<<<<<< Updated upstream
     string test="Then out spake brave Hous, The Captain of the Gate:";
     
     if(to_string(RSHash(test))==zz)cout<<"valid";
+=======
+    string test="Then out spake brave Horatius, The Captain of the Gate:";
+    cout<<test<<endl;
+    cout<<validat(test,zz,one,top);
+>>>>>>> Stashed changes
     
-
     return 0;
 }
 
@@ -101,6 +98,7 @@ unsigned int RSHash(const std::string& str){
 
    return hash;
 }
+<<<<<<< Updated upstream
 unsigned int JSHash(const std::string& str){
    unsigned int hash = 1315423911;
 
@@ -218,4 +216,17 @@ unsigned int APHash(const std::string& str){
    }
 
    return hash;
+=======
+
+bool validat(string test,string leaf,string branch,string top){
+    string tLeaf=to_string(RSHash(test));
+    string tBran=to_string(RSHash(tLeaf+leaf));
+    string tTop =to_string(RSHash(tBran+branch));
+    if(tTop==to_string(RSHash(top))){
+        return true;
+    }
+    else{
+        return false;
+    }
+>>>>>>> Stashed changes
 }

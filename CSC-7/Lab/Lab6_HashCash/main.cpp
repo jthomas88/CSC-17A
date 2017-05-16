@@ -19,20 +19,14 @@
 #include "GeneralHashFunctions.h"
 
 unsigned int RSHash(const std::string&);
-unsigned int JSHash(const std::string&);
-unsigned int PJWHash(const std::string&);
-unsigned int ELFHash(const std::string&);
 unsigned int BKDRHash(const std::string&);
 unsigned int SDBMHash(const std::string&);
 unsigned int DJBHash(const std::string&);
 unsigned int DEKHash(const std::string&);
 unsigned int BPHash(const std::string&);
 unsigned int FNVHash(const std::string&);
-unsigned int APHash(const std::string&);
 
 void hcRS(int[],std::string);
-void hcPJW(int[],std::string);
-void hcELF(int[],std::string);
 void hcBKDR(int[],std::string);
 void hcSDBM(int[],std::string);
 void hcDJB(int[],std::string);
@@ -248,44 +242,6 @@ void dispRes(int power[]){
     cout<<"Less than 10^2  : "<<power[2]<<endl;
 }
 
-void hcPJW(int power[],string nonce){
-    unsigned int count=0;
-    string hash;
-    do{  
-        //cout<<count<<endl;
-        hash=nonce+to_string(count);
-        //cout<<PJWHash(hash)<<endl;
-        if(PJWHash(hash)<pow(10,10))power[0]++;
-        if(PJWHash(hash)<pow(10,9))power[9]++;
-        if(PJWHash(hash)<pow(10,8))power[8]++;
-        if(PJWHash(hash)<pow(10,7))power[7]++;
-        if(PJWHash(hash)<pow(10,6))power[6]++;
-        if(PJWHash(hash)<pow(10,5))power[5]++;
-        if(PJWHash(hash)<pow(10,4))power[4]++;
-        if(PJWHash(hash)<pow(10,3))power[3]++;
-        if(PJWHash(hash)<pow(10,2))power[2]++;
-        count++;
-    }while(PJWHash(hash)>100000||count==4294967295);
-}
-void hcELF(int power[],string nonce){
-    int count=0;
-    string hash;
-    do{   
-        hash=nonce+to_string(count);
-        //cout<<ELFHash(hash)<<endl;
-        if(ELFHash(hash)<pow(10,10))power[0]++;
-        if(ELFHash(hash)<pow(10,9))power[9]++;
-        if(ELFHash(hash)<pow(10,8))power[8]++;
-        if(ELFHash(hash)<pow(10,7))power[7]++;
-        if(ELFHash(hash)<pow(10,6))power[6]++;
-        if(ELFHash(hash)<pow(10,5))power[5]++;
-        if(ELFHash(hash)<pow(10,4))power[4]++;
-        if(ELFHash(hash)<pow(10,3))power[3]++;
-        if(ELFHash(hash)<pow(10,2))power[2]++;
-        count++;
-    }while(ELFHash(hash)>1000||count==4294967295);
-}
-
 unsigned int RSHash(const std::string& str)
 {
    unsigned int b    = 378551;
@@ -300,55 +256,7 @@ unsigned int RSHash(const std::string& str)
 
    return hash;
 }
-unsigned int JSHash(const std::string& str)
-{
-   unsigned int hash = 1315423911;
 
-   for(std::size_t i = 0; i < str.length(); i++)
-   {
-      hash ^= ((hash << 5) + str[i] + (hash >> 2));
-   }
-
-   return hash;
-}
-unsigned int PJWHash(const std::string& str)
-{
-   unsigned int BitsInUnsignedInt = (unsigned int)(sizeof(unsigned int) * 8);
-   unsigned int ThreeQuarters     = (unsigned int)((BitsInUnsignedInt  * 3) / 4);
-   unsigned int OneEighth         = (unsigned int)(BitsInUnsignedInt / 8);
-   unsigned int HighBits          = (unsigned int)(0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
-   unsigned int hash              = 0;
-   unsigned int test              = 0;
-
-   for(std::size_t i = 0; i < str.length(); i++)
-   {
-      hash = (hash << OneEighth) + str[i];
-
-      if((test = hash & HighBits)  != 0)
-      {
-         hash = (( hash ^ (test >> ThreeQuarters)) & (~HighBits));
-      }
-   }
-
-   return hash;
-}
-unsigned int ELFHash(const std::string& str)
-{
-   unsigned int hash = 0;
-   unsigned int x    = 0;
-
-   for(std::size_t i = 0; i < str.length(); i++)
-   {
-      hash = (hash << 4) + str[i];
-      if((x = hash & 0xF0000000L) != 0)
-      {
-         hash ^= (x >> 24);
-      }
-      hash &= ~x;
-   }
-
-   return hash;
-}
 unsigned int BKDRHash(const std::string& str)
 {
    unsigned int seed = 131; // 31 131 1313 13131 131313 etc..
@@ -412,18 +320,6 @@ unsigned int FNVHash(const std::string& str)
    {
       hash *= fnv_prime;
       hash ^= str[i];
-   }
-
-   return hash;
-}
-unsigned int APHash(const std::string& str)
-{
-   unsigned int hash = 0xAAAAAAAA;
-
-   for(std::size_t i = 0; i < str.length(); i++)
-   {
-      hash ^= ((i & 1) == 0) ? (  (hash <<  7) ^ str[i] * (hash >> 3)) :
-                               (~((hash << 11) + (str[i] ^ (hash >> 5))));
    }
 
    return hash;
